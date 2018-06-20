@@ -1,21 +1,34 @@
+#!/usr/bin/env python
+#-*-coding:utf-8-*-
+
+import tornado.web
+import tornado.options
 import tornado.httpserver
 import tornado.ioloop
-import tornado.options
-import tornado.web
 
 from tornado.options import define, options
-define("port", default=8000, help="run on the given port", type=int)
+define("port", default=8888, type=int, help="run on the given port")
 
 
-class IndexHandler(tornado.web.RequestHandler):
+class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        greeting = self.get_argument("greeting", "Hello")
-        self.write(greeting + ', friendly user!')
+        self.write('''
+<html><body><form method="post" action="/">
+<input type="text" name="message">
+<input type="submit" value="Submit">
+</form></body></html>
+			''')
+
+    def post(self):
+        self.set_header("Content-Type", "text/plain")
+        self.write("You wrote " +
+                   self.get_argument("message", ""))
 
 
 if __name__ == "__main__":
-    tornado.options.parse_command_line()
-    app = tornado.web.Application(handlers=[(r"/", IndexHandler)])
-    http_server = tornado.httpserver.HTTPServer(app)
+    application = tornado.web.Application(handlers=[
+        (r'/', MainHandler)],
+        debug=True)
+    http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
