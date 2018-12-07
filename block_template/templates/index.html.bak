@@ -1,0 +1,8 @@
+{% extends "main.html" %}
+{% block header %}
+	<h1>{{header_text}}</h1>
+{% end %}
+
+{% block content %}
+	<p>hello from the child teplate!</p>
+{% end %}

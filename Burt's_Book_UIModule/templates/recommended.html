@@ -1,0 +1,6 @@
+{% extends "main.html" %}
+{% block body %}
+  {% for book in books %}
+	{% module Book(book) %}
+  {% end %}
+{% end %}

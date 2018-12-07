@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+ </head>
+ <body>
+  <header>
+  {% block header %}{% end %}
+  </header>
+  <content>
+  {% block content %}{% end %}
+  </content>
+ </body>
+</html>
